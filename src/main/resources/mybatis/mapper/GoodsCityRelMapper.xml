@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pagoda.dao.GoodsCityRelMapper">
+
+    <resultMap id="BaseResultMap" type="com.pagoda.bean.GoodsCityRel">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="goodsID" property="goodsID" jdbcType="INTEGER"/>
+        <result column="cityID" property="cityID" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="lastUpdate" property="lastUpdate" jdbcType="TIMESTAMP"/>
+        <result column="downStatus" property="downStatus" jdbcType="VARCHAR"/>
+        <result column="effectNum" property="effectNum" jdbcType="VARCHAR"/>
+        <result column="waitNum" property="waitNum" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <!--List<GoodsCityRel> getGoodsCityRelByConditonGoods(GoodsCityCodition goodsCityCodition);-->
+    <select id="getGoodsCityRelByConditonGoods" resultMap="BaseResultMap" >
+
+        SELECT   gc.id AS id, gc.goodsID AS goodsID, gc.cityID AS cityID, gc.status AS status, gc.createTime AS createTime,
+        gc.lastUpdate AS lastUpdate, gc.downStatus AS downStatus, gc.effectNum AS effectNum, gc.waitNum AS waitNum
+        FROM goods_city_rel  gc INNER JOIN goods g
+        ON  gc.goodsID = g.id
+        WHERE gc.status = #{goodsCityRelStatus} AND
+        gc.cityID =#{cityId} AND
+        g.status = #{goodsStatus} AND
+        g.isPre = #{isPre} AND
+        g.goodSubType = #{goodSubType} AND
+        g.groupSupport =#{groupSupport}
+
+    </select>
+
+</mapper>
